@@ -1,0 +1,347 @@
+﻿@using ShopSWE.Models.ViewModels
+<!DOCTYPE html>
+<html lang="en">
+@{
+    List<giohang> ds = null;
+    ViewBag.giohangSoluong = 0;
+    int tongtien = 0;
+    if (Session["giohang"] != null)
+    {
+        ds = (List<giohang>)Session["giohang"];
+        foreach (giohang item in ds)
+        {
+            tongtien += item.soluong * item.Price;
+        }
+        ViewBag.giohangSoluong = ds.Sum(x => x.soluong);
+    }
+}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SWE</title>
+    <link rel="icon" href="~/Content/img/logo2.png">
+    <!-- Toasts -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css" rel="stylesheet" />
+
+    <script src="https://use.fontawesome.com/releases/v5.12.0/js/all.js"></script>
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <!-- Toasts -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
+    <link rel="stylesheet" href="~/Content/Css/style.css">
+
+</head>
+<body>
+    <div class="menu">
+        <a href="#" id="button-shopping-cart"><i id="shopping-cart" class="fas fa-shopping-cart" onclick="open_cart()"></i><span id="count2">@ViewBag.giohangSoluong</span></a>
+        <a href="@Url.Action("Index","Home")"><img src="~/Content/img/logo.gif" alt="" id="img1"></a>
+        <input id="menu2" type="checkbox">
+        <label for="menu2"></label>
+        <div id="search">
+            <form action="@Url.Action("SearchItem", "Home")" method="post">
+                <input class="search" id="input-search" type="text" name="productName" placeholder="Tìm kiếm">
+                <button style="border:none; background:none;" id="search-2" type="submit"><i class="fas fa-search-plus"></i></button>
+            </form>
+        </div>
+        <ul id="menu1">
+            <li><img src="~/Content/img/logo2.png" alt="" id="logo2"></li>
+            <li>
+                <form action="@Url.Action("SearchItem", "Home")" method="post">
+                    <input type="text" id="search-menu1" name="productName" placeholder="Tìm kiếm">
+                </form>
+            </li>
+            <li><a href="@Url.Action("Index","Home")">HOME</a></li>
+            <li><a href="@Url.Action("Top","Home")">TOPS</a></li>
+            <li><a href="@Url.Action("Outerwear","Home")">OUTERWEAR</a></li>
+            <li><a href="@Url.Action("Bottom","Home")">BOTTOMS</a></li>
+            <li><a href="@Url.Action("Accessories","Home")">ACCESSORIES</a></li>
+            <li><a href="">SIZE CHART</a></li>
+            <li><a href="@Url.Action("AboutUs","Home")">ABOUT US</a></li>
+            <li><a href="@Url.Action("Login","Admin")">SIGN IN</a></li>
+            <li><a href="#" onclick="timkiem()"><i class="fas fa-search"></i></a></li>
+            <li><a href="#" id="opencart"><i class="fas fa-shopping-cart"></i><span id="count" style="margin-left: 0;">@ViewBag.giohangSoluong</span></a></li>
+        </ul>
+    </div>
+
+
+    @*Giỏ hàng*@
+    <div class="cart" id="cart">
+        <div class="cart-1">
+            <div class="cart-close-all" onclick="close_cart()">
+                <i class="fas fa-times"></i>
+            </div>
+            <h3>GIỎ HÀNG</h3>
+            <ul class="cart-item" id="cart-item">
+                @if (Session["giohang"] != null)
+                {
+                    foreach (giohang item in (List<giohang>)Session["giohang"] as List<giohang>)
+                    {
+                        <li>
+                            <div class="cart-img">
+                                <img src="@item.Img" style="width: 100px;">
+
+                            </div>
+                            <div class="cart-price">
+                                <span>@item.Name</span>
+                                <p>@item.soluong × @(string.Format("{0:#,##0}", item.Price)) VNĐ</p>
+                            </div>
+                            <div class="cart-close">
+                                <i class="far fa-times-circle" id="cart-close"></i>
+                            </div>
+                        </li>
+                    }
+                }
+                else
+                {
+                    <li class="none-product">
+                        <h4>Chưa có sản phẩm nào</h4>
+                    </li>
+                }
+            </ul>
+            <h4>TẠM TÍNH: @*<span id="totalCost"></span>*@ @(string.Format("{0:#,##0}", tongtien)) VNĐ</h4>
+            <button id="button-1">XEM GIỎ HÀNG</button>
+            @if (Session["giohang"] != null)
+            {
+                @*<button id="button-2" class="PayCart" onclick="location.href ='/Home/Pay'">THANH TOÁN</button>*@
+                <button id="button-2" onclick="location.href ='/Home/Pay'">THANH TOÁN</button>
+            }
+            else
+            {
+                <button id="button-2" onclick="cart_null()">THANH TOÁN</button>
+            }
+            <button id="button-2" onclick="location.href ='/Home/DeleteAll'">XÓA GIỎ HÀNG</button>
+        </div>
+        <div class="cart-2" onclick="close_cart()">
+        </div>
+    </div>
+    @RenderBody()
+</body>
+</html>
+<footer class="footer">
+    <ul class="ul-footer">
+        <li>
+            <div class="card-footer">
+                <img src="~/Content/img/logo.gif" alt="">
+                <p>Office Online: 0345 500 073</p>
+                <p>HN: 192 Kim Mã, Ba Đình, Hà Nội</p>
+                <p>Open: 8h30 - 21h30 - Hotline:0345 500 073 (tạm đóng cửa)</p>
+            </div>
+        </li>
+        <li>
+            <div class="card-footer">
+                <h5>CHÍNH SÁCH</h5>
+                <p>CHÍNH SÁCH BẢO QUẢN</p>
+                <p>CHÍNH SÁCH ĐỔI HÀNG</p>
+                <p>CHÍNH SÁCH BẢO MẬT</p>
+                <p>HỆ THỐNG MEMBER</p>
+            </div>
+        </li>
+        <li>
+            <div class="card-footer">
+                <h5>DỊCH VỤ HƯỚNG DẪN</h5>
+                <p>GIAO HÀNG TẬN NƠI</p>
+                <p>MEMBER OFFLINE</p>
+                <p>MEMBER ONLINE</p>
+                <p>HƯỚNG DẪN ĐĂNG KÝ TÀI KHOẢN</p>
+                <p>HƯỚNG DẪN BẢO QUẢN</p>
+            </div>
+        </li>
+        <li>
+            <div class="card-footer">
+                <h5>CỘNG ĐỒNG</h5>
+                <a href=""><i class="fab fa-facebook-f"></i></a><a href=""><i class="fab fa-instagram"></i></a>
+                <h5 style="margin-top:20px;">ĐỐI TÁC GIAO HÀNG</h5>
+                <img src="~/Content/img/doitacgiaohang.png" alt="">
+            </div>
+        </li>
+    </ul>
+    <p class="last-footer" style="font-size:20px; font-weight:bold;">Copyright 2018 © SWE</p>
+</footer>
+
+@RenderSection("scripts", required: false)
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+
+<script>
+    ////giỏ hàng
+    //var giohang = [];
+    //var sosp = 0;
+    //var tongtien = 0;
+    ////lấy item trong localstorage
+    //if (window.localStorage) {
+    //    giohang = JSON.parse(window.localStorage.getItem("giohang"));
+    //}
+    //if (!giohang) {
+    //    giohang = [];
+    //}
+    //if (giohang.length > 0) {
+    //    for (i in giohang) {
+    //        sosp += giohang[i].soluong;
+    //        tongtien += giohang[i].soluong * giohang[i].gia;
+    //    }
+    //}
+    ////add sản phẩm ào giỏ hàng
+    //function AddToCart(id, img, name, price) {
+    //    for (i in giohang) {
+    //        var exist = false;
+    //        if (giohang[i].ma == id) {
+    //            giohang[i].soluong++;
+    //            sosp++;
+    //            tongtien += giohang[i].gia;
+    //            exist = true;
+    //        }
+    //    }
+    //    if (!exist) {
+    //        var sanpham = { ma: id, img: img, ten: name, gia: price, soluong: 1 };
+    //        giohang.push(sanpham);
+    //        sosp++;
+    //        tongtien += sanpham.gia;
+    //    }
+    //    window.localStorage.setItem("giohang", JSON.stringify(giohang));
+    //    toastr.success('Thêm vào giỏ hàng thành công', 'SUCCESS!!!');
+    //    $('#count').text(sosp);
+    //    $('#count2').text(sosp);
+    //}
+    ////ready
+    //$(document).ready(function () {
+    //    $('#count').text(sosp);
+    //    $('#count2').text(sosp);
+    //    if (giohang.length == 0) {
+    //        var cartNull = `<li class="none-product">
+    //                        <h4> Chưa có sản phẩm nào</h4>
+    //                    </li>`;
+    //        $('#cart-item').html(cartNull);
+    //    }
+    //    showCart();
+    //})
+    ////hiển thị giỏ hàng
+    //function showCart() {
+    //    var listShowCart = "";
+    //    for (i in giohang) {
+    //        listShowCart += `<li class="li-itemCart" data-id='${giohang[i].ma}'>
+    //                            <div class="cart-img">
+    //                                <img src="${giohang[i].img}" style="width: 100px;">
+    //                            </div>
+    //                            <div class="cart-price">
+    //                                <span>${giohang[i].ten}</span>
+    //                                <p>${giohang[i].soluong} × ${giohang[i].gia} VNĐ</p>
+    //                            </div>
+    //                            <div class="cart-close" data-id='${giohang[i].ma}' data-qty='${giohang[i].soluong}' data-price='${giohang[i].gia}'>
+    //                                <i class="far fa-times-circle" id="cart-close"></i>
+    //                            </div>
+    //                        </li>`;
+
+    //        var payCart = "";
+    //        for (i in giohang) {
+    //            payCart += `<li>
+    //                            <div class="product">
+    //                                <span>${giohang[i].ten}</span>
+    //                                <p>${giohang[i].soluong} × ${giohang[i].gia} VNĐ</p>
+    //                            </div>
+    //                            <div class="total-product">
+    //                                <p id="total-paycart">${giohang[i].gia * giohang[i].soluong} VNĐ</p>
+    //                            </div>
+    //                        </li>`;
+    //        }
+    //    }
+    //    $("#cart-item").html(listShowCart);
+    //    $("#totalCost").html(tongtien);
+    //    $("#order-form-2-product").html(payCart);
+    //    $("#totalCost-Pay").html(tongtien);
+    //    $("#totalCost-Pay-2").html(tongtien + 30000);
+    //}
+    ////xóa sản phẩm trong giỏ hàng
+    //removeCart();
+    //function removeCart() {
+    //    $(document).on('click', '.cart-close', function () {
+    //        let id = $(this).attr('data-id');
+    //        let qty = $(this).attr('data-qty');
+    //        let price = $(this).attr('data-price');
+    //        let ten = $(this).attr('data-name');
+    //        tongtien -= price * qty;
+    //        sosp -= qty;
+    //        $("#totalCost").html(tongtien);
+    //        $('#count').text(sosp);
+    //        giohang = giohang.filter(x => x.ma != id);
+    //        window.localStorage.setItem("giohang", JSON.stringify(giohang));
+    //        $('.li-itemCart[data-id="' + id + '"]').remove();
+    //        toastr.success('Bạn đã xóa sản phẩm trong giỏ hàng', 'SUCCESS!!!');
+    //    })
+    //}
+    ////xóa tất cả sản phẩm trong giỏ hàng
+    //function clearCart() {
+    //    $('#count').text(0);
+    //    $('#totalCost').text(0);
+    //    //$('#cart-item').html('');
+    //    var cartNull = `<li class="none-product">
+    //                        <h4> Chưa có sản phẩm nào</h4>
+    //                    </li>`;
+    //    $('#cart-item').html(cartNull);
+    //    localStorage.clear();
+    //    toastr.success('Bạn đã xóa tất cả sản phẩm trong giỏ hàng', 'SUCCESS!!!');
+    //}
+    ////đặt hàng
+    //function checkValue() {
+    //    var dsDonHang = [];
+    //    for (i in giohang) {
+    //        var totalPrice = giohang[i].soluong * giohang[i].gia;
+    //        var ctdh = { OrderID: 0, Name: giohang[i].ten, Quantity: giohang[i].soluong, Price: giohang[i].gia, TotalPrice: totalPrice, SanphamID: giohang[i].ma };
+    //        dsDonHang.push(ctdh);
+    //    }
+    //    var data = JSON.stringify(dsDonHang);
+    //    $.ajax('', {
+    //        url: '/Home/AddOrder',
+    //        data: { arr: dsDonHang},
+    //        dataType: 'json',
+    //        method: 'Post',
+    //        success: function (res) { alert(res) }
+    //    });
+
+    //    let data2 = $('#order-form').serialize();
+    //    console.log(data2);
+    //    $.ajax({
+    //        url: '/Home/AddOrder',
+    //        data: data2,
+    //        dataType: 'json',
+    //        method: 'Post',
+    //        success: function (res) { alert(res) }
+    //    });
+
+
+
+
+
+    //    var ShipName = document.getElementById("ShipName").value;
+    //    var ShipMobile = document.getElementById("ShipMobile").value;
+    //    var ShipEmail = document.getElementById("ShipEmail").value;
+    //    var ShipAddress = document.getElementById("ShipAddress").value;
+    //    if (ShipName == "" || ShipMobile == "" || ShipEmail == "" || ShipAddress == "") {
+    //        toastr.error('Bạn chưa nhập đủ thông tin đơn hàng', 'ERROR!!!');
+    //    }
+    //    else {
+    //        Swal.fire({
+    //            icon: 'success',
+    //            title: 'Đặt hàng thành công',
+    //            text: 'Cảm ơn bạn đã luôn tin tưởng và ủng hộ SWE!',
+    //            footer: '<a href>Phản hồi vào số điện thoại : 0345500073</a>'
+    //        })
+    //    }
+    //}
+
+
+    $('#opencart').click(function () {
+        $('#cart').css("left", "0%");
+        showCart();
+    })
+    function close_cart() {
+        document.getElementById("cart").style.left = "-100%";
+    }
+    function cart_null() {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Giỏ hàng của bạn chưa có sản phẩm',
+        })
+    }
+</script>
+<script src="~/Content/Script/script.js"></script>
+

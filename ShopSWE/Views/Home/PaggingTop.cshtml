@@ -1,0 +1,54 @@
+﻿@using ShopSWE.Models.Enity
+@model ShopSWE.Models.ViewModels.SanphamViewModels
+@{
+    int previous = Model.pageIndex - 1;
+    int next = Model.pageIndex + 1;
+}
+<div class="row">
+    @foreach (Sanpham1 item in Model.sanphams as List<Sanpham1>)
+    {
+        <div class="col-6 col-lg-4 col-md-6 col-sm-4 col-xl-3">
+            <div class="card" onclick="return location.href = '/Home/Detail/@item.ID'">
+                <img class="card-img-top" src="@item.Img" alt="Card image cap">
+                <img class="card-img-top" id="img2" src="@item.Img2" alt="Card image cap">
+                <div class="card-body">
+                    <a href="#" class="btn btn-primary" onclick="return location.href = '/Home/Detail/@item.ID'">Xem Chi Tiết</a>
+                    <h5 class="card-title">@item.Name</h5>
+                    <p class="card-text">@(string.Format("{0:#,##0}", item.Price)) VNĐ</p>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+        @if (Model.pageIndex == 1)
+        {
+            <li class="page-item"><a class="page-link" style="opacity: 0.5;"><i class="fas fa-angle-left"></i></a></li>
+
+        }
+        @if (Model.pageIndex > 1)
+        {
+            <li class="page-item"><a class="page-link" onclick="Refresh2('#Top',@previous)"><i class="fas fa-angle-left"></i></a></li>
+        }
+        @for (int i = 1; i <= Model.TotalPage; i++)
+        {
+            if (i == Model.pageIndex)
+            {
+                <li class="page-item"><a class="page-link-active page-link" onclick="Refresh2('#Top',@i)">@i</a></li>
+            }
+            else
+            {
+                <li class="page-item"><a class="page-link" onclick="Refresh2('#Top',@i)">@i</a></li>
+            }
+        }
+        @if (Model.pageIndex < Model.TotalPage)
+        {
+            <li id="next" class="page-item"><a class="page-link" onclick="Refresh2('#Top',@next)"><i class="fas fa-angle-right"></i></a></li>
+        }
+        @if (Model.pageIndex == Model.TotalPage)
+        {
+            <li id="next" class="page-item"><a class="page-link" style="opacity: 0.5;"><i class="fas fa-angle-right"></i></a></li>
+        }
+    </ul>
+</nav>

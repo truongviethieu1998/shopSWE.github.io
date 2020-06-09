@@ -1,0 +1,63 @@
+﻿@model ShopSWE.Models.Enity.Order1
+@{
+    ViewBag.Title = "SuccessOrder";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="~/Content/Css/style.css">
+<link rel="stylesheet" href="~/Content/Css/styleSuccesOrder.css">
+<div id="input-area" class="Order">
+    <h2><i class="far fa-check-circle"></i> Đặt Hàng Thành Công</h2>
+    <div class="row">
+        <div class="col-12 order-form-2">
+            <h3 style="margin-top: 10px;">THÔNG TIN ĐƠN HÀNG</h3>
+            <div class="order-form-2-product">
+                <ul>
+                    <li>
+                        <div class="product">
+                            <span>Mã Đơn Hàng</span>
+                            <p>@Model.OrderID</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="product">
+                            <span>Họ Và Tên</span>
+                            <p>@Model.ShipName</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="product">
+                            <span>Email</span>
+                            <p>@Model.ShipEmail</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="product">
+                            <span>Số Điện Thoại</span>
+                            <p>@Model.ShipMobile</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="product">
+                            <span>Địa Chỉ</span>
+                            <p>@Model.ShipAddress</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="product">
+                            <span>Phương Thức Thanh Toán</span>
+                            <p>Thanh Toán Khi Giao Hàng (COD)</p>
+                        </div>
+                    </li>
+                    <li id="price-product" class="thank-you">
+                        <p>Cám ơn quý khách đã tin tưởng và luôn ủng hộ SWE</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <a href="@Url.Action("Index","Home")">Tiếp Tục Mua Hàng</a>
+    </div>
+</div>

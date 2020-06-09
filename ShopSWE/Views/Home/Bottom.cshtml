@@ -1,0 +1,84 @@
+﻿@{
+    ViewBag.Title = "Bottom";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<title>SWE</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="~/Content/Css/style.css">
+<style>
+    .pagination {
+        width: 170px;
+        margin: 0 auto;
+        padding-bottom: 20px;
+    }
+
+        .pagination li {
+            margin: 0 3px;
+            cursor: pointer;
+        }
+
+    .page-link-active {
+        background-color: orange;
+        color: white;
+    }
+
+    .pagination a {
+        font-weight: bold;
+        padding: 6px 12px;
+        border-radius: 100%;
+        border: 2px solid orange;
+        transition: .3s all;
+    }
+
+        .pagination a:hover {
+            background-color: orange;
+            border: 2px solid orange;
+        }
+
+    .page-item:last-child .page-link {
+        border-top-right-radius: 100%;
+        border-bottom-right-radius: 100%;
+    }
+
+    .page-item:first-child .page-link {
+        border-top-left-radius: 100%;
+        border-bottom-left-radius: 100%;
+    }
+</style>
+<div class="store">
+    <div class="new-arrivals">
+        <p>
+            Life's To Short To Wear Boring Clothes.
+            <span>
+                BOTTOM
+            </span>
+        </p>
+    </div>
+</div>
+<div class="container" id="Bottom">
+    @{Html.RenderAction("PaggingBottom", "Home");}
+</div>
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script>
+    function Refresh2(destination, pageIndex) {
+        $.ajax({
+            url: '/Home/PaggingBottom',
+            type: 'GET',
+            dataType: 'html',
+            data: { pageIndex: pageIndex },
+        })
+            .done(function (res) {
+                $(destination).html(res);
+            })
+            .fail(function () {
+
+            })
+            .always(function () {
+
+            });
+    }
+</script>
+

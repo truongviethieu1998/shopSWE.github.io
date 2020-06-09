@@ -1,0 +1,94 @@
+﻿@model List<ShopSWE.Models.ViewModels.CartItem>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="~/Content/Css/style.css">
+<link rel="stylesheet" href="~/Content/Css/stylePay.css">
+
+<div id="input-area" class="Order">
+    <h2>Thanh Toán</h2>
+    <div class="row">
+        <div class="col-12 col-lg-6">
+            <form id="order-form" action="/" method="post">
+                <h3 style="margin-top: 30px;">THÔNG TIN THANH TOÁN</h3>
+                <div class="order-input col-12">
+                    <p>Họ Và Tên *</p>
+                    <input type="text" name="HoTen" placeholder="Nhập đầy đủ họ và tên">
+                </div>
+                <div class="order-input col-12">
+                    <p>Số điện thoại *</p>
+                    <input type="text" id="Phone" name="Phone" placeholder="Số điện thoại">
+                </div>
+                <div class="order-input col-12">
+                    <p>Email *</p>
+                    <input type="Email" name="Email" placeholder="Email của bạn">
+                </div>
+                <div class="order-input col-12">
+                    <p>Địa Chỉ *</p>
+                    <input type="text" name="DiaChi" placeholder="Ví dụ: số nhà 44,ngõ 192 Kim Mã,Hà Nội">
+                </div>
+            </form>
+        </div>
+
+        <div class="col-12 col-lg-6 order-form-2">
+            <h3 style="margin-top: 10px;">ĐƠN HÀNG CỦA BẠN</h3>
+            <p id="sanpham">SẢN PHẨM</p>
+            <div class="order-form-2-product">
+                <ul>
+                    @foreach (var item in Model)
+                    {
+                        <li>
+                            <div class="product">
+                                <span>@item.sanpham.Name</span>
+                                <p>@item.Quantity × @(string.Format("{0:#,##0}", item.sanpham.Price)) VNĐ</p>
+                            </div>
+                            <div class="total-product">
+                                <p>@(string.Format("{0:#,##0}", item.sanpham.Price * item.Quantity))Đ</p>
+                            </div>
+                        </li>
+
+                    }
+
+
+                    @*<li id="price-product">
+                        <div class="product">
+                            <p style="color: black; font-weight:bold;">Tạm tính</p>
+                        </div>
+                        <div class="total-product">
+                            <p>@(string.Format("{0:#,##0}", tongtien))</p>
+                        </div>
+                    </li>
+                    <li id="price-product">
+                        <div class="product">
+                            <p style="color: black; font-weight:bold;">Giao hàng</p>
+                        </div>
+                        <div class="total-product">
+                            <p>@(string.Format("{0:#,##0}", giaohang)) VNĐ</p>
+                        </div>
+                    </li>
+                    <li id="price-product">
+                        <div class="product">
+                            <p style="color: black; font-weight:bold;">Tổng</p>
+                        </div>
+                        <div class="total-product">
+                            <p>@(string.Format("{0:#,##0}", tongtien2)) VNĐ</p>
+                        </div>
+                    </li>*@
+                    <li id="price-product">
+                        <a onclick="Add()">ĐẶT HÀNG</a>
+                    </li>
+                    <li id="price-product" class="thank-you">
+                        <p>Cám ơn quý khách đã tin tưởng và luôn ủng hộ SWE</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+

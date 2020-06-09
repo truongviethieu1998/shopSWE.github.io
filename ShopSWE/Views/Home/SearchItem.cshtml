@@ -1,0 +1,45 @@
+﻿@model List<ShopSWE.Models.Enity.Sanpham1>
+@using ShopSWE.Models.Enity
+@{
+    ViewBag.Title = "SearchItem";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="~/Content/Css/style.css">
+<style>
+    .new-arrivals {
+        height: 120px;
+    }
+</style>
+<div class="store">
+    <div class="new-arrivals">
+        <span>
+            SEARCH ITEM
+        </span>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        @foreach (Sanpham1 item in Model as List<Sanpham1>)
+        {
+            <div class="col-6 col-lg-4 col-md-6 col-sm-4 col-xl-3">
+                <div class="card" onclick="return location.href = '/Home/Detail/@item.ID'">
+                    <img class="card-img-top" src="@item.Img" alt="Card image cap">
+                    <img class="card-img-top" id="img2" src="@item.Img2" alt="Card image cap">
+                    <div class="card-body">
+                        <a href="#" class="btn btn-primary" onclick="return location.href = '/Home/Detail/@item.ID'">Xem Chi Tiết</a>
+                        <h5 class="card-title">@item.Name</h5>
+                        <p class="card-text">@(string.Format("{0:#,##0}", item.Price)) VNĐ</p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+
+

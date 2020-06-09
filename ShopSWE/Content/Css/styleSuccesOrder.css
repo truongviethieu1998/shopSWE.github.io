@@ -1,0 +1,120 @@
+* {
+    text-decoration: none;
+    list-style: none;
+}
+
+.row {
+    width: 80%;
+    margin: 20px auto;
+    font-family: 'Barlow Semi Condensed', sans-serif;
+}
+
+    .row h3 {
+        color: orange;
+        font-weight: bold;
+    }
+
+.Order {
+    position: relative;
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+    .Order h2 {
+        font-weight: bold;
+        padding: 25px;
+        background-color: orange;
+        color: white;
+    }
+
+#order-form {
+    position: relative;
+}
+
+    #order-form .order-input, .order-input input {
+        width: 100%;
+    }
+
+.order-input {
+    margin-top: 25px;
+}
+
+    .order-input p {
+        margin: 5px 0;
+        font-weight: bold;
+    }
+
+    .order-input input {
+        padding: 7px;
+        outline: none;
+    }
+
+.order-form-2 {
+    position: relative;
+    border: 3px solid orange;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+
+    .order-form-2 #sanpham {
+        margin-top: 25px;
+        font-weight: bold;
+        width: 90px;
+        border-bottom: 2px solid #ececec;
+    }
+
+.order-form-2-product {
+    position: relative;
+    width: 100%;
+}
+
+    .order-form-2-product ul {
+        padding: 0;
+    }
+
+    .order-form-2-product li {
+        display: flex;
+        margin-bottom: 5px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #ececec;
+    }
+
+    .order-form-2-product .product {
+        width: 70%;
+    }
+
+        .order-form-2-product .product span {
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .order-form-2-product .product p {
+            margin: 0;
+        }
+
+    .order-form-2-product .total-product {
+        width: 30%;
+        font-weight: bold;
+        text-align: right;
+    }
+
+    .order-form-2-product #price-product {
+        margin: 0;
+        padding: 0;
+        border-bottom: none;
+    }
+
+.row a {
+    text-decoration: none;
+    background: black;
+    color: white;
+    font-weight: bold;
+    padding: 8px 20px;
+    margin-top: 5px;
+    cursor: pointer;
+}
+
+.order-form-2-product .thank-you p {
+    margin: 15px auto 5px;
+    color: gray;
+}

@@ -1,0 +1,180 @@
+﻿@using ShopSWE.Models.ViewModels
+<!DOCTYPE html>
+<html lang="en">
+@{
+    List<giohang> ds = null;
+    ViewBag.giohangSoluong = 0;
+    int tongtien = 0;
+    if (Session["giohang"] != null)
+    {
+        ds = (List<giohang>)Session["giohang"];
+        foreach (giohang item in ds)
+        {
+            tongtien += item.soluong * item.Price;
+        }
+        ViewBag.giohangSoluong = ds.Sum(x => x.soluong);
+    }
+}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SWE</title>
+    <link rel="icon" href="~/Content/img/logo2.png">
+    <!-- Toasts -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css" rel="stylesheet" />
+
+    <script src="https://use.fontawesome.com/releases/v5.12.0/js/all.js"></script>
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <!-- Toasts -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
+    <link rel="stylesheet" href="~/Content/Css/style.css">
+
+</head>
+<body>
+    <div class="menu">
+        <a href="#" id="button-shopping-cart"><i id="shopping-cart" class="fas fa-shopping-cart" onclick="open_cart()"></i><span id="count2">0</span></a>
+        <a href="@Url.Action("Index","Home")"><img src="~/Content/img/logo.gif" alt="" id="img1"></a>
+        <input id="menu2" type="checkbox">
+        <label for="menu2"></label>
+        <div id="search">
+            <form action="@Url.Action("SearchItem", "Home")" method="post">
+                <input class="search" id="input-search" type="text" name="productName" placeholder="Tìm kiếm">
+                <button style="border:none; background:none;" id="search-2" type="submit"><i class="fas fa-search-plus"></i></button>
+            </form>
+        </div>
+        <ul id="menu1">
+            <li><img src="~/Content/img/logo2.png" alt="" id="logo2"></li>
+            <li>
+                <form action="@Url.Action("SearchItem", "Home")" method="post">
+                    <input type="text" id="search-menu1" name="productName" placeholder="Tìm kiếm">
+                </form>
+            </li>
+            <li><a href="@Url.Action("Index","Home")">HOME</a></li>
+            <li><a href="@Url.Action("Top","Home")">TOPS</a></li>
+            <li><a href="@Url.Action("Outerwear","Home")">OUTERWEAR</a></li>
+            <li><a href="@Url.Action("Bottom","Home")">BOTTOMS</a></li>
+            <li><a href="@Url.Action("Accessories","Home")">ACCESSORIES</a></li>
+            <li><a href="">SIZE CHART</a></li>
+            <li><a href="@Url.Action("AboutUs","Home")">ABOUT US</a></li>
+            <li><a href="@Url.Action("Login","Admin")">SIGN IN</a></li>
+            <li><a href="#" onclick="timkiem()"><i class="fas fa-search"></i></a></li>
+            <li><a href="#" id="opencart"><i class="fas fa-shopping-cart"></i><span id="count" style="margin-left: 0;">@ViewBag.giohangSoluong</span></a></li>
+        </ul>
+    </div>
+
+
+    @*Giỏ hàng*@
+    <div class="cart" id="cart">
+        <div class="cart-1">
+            <div class="cart-close-all" onclick="close_cart()">
+                <i class="fas fa-times"></i>
+            </div>
+            <h3>GIỎ HÀNG</h3>
+            <ul class="cart-item" id="cart-item">
+                @if (Session["giohang"] != null)
+                {
+                    foreach (giohang item in (List<giohang>)Session["giohang"] as List<giohang>)
+                    {
+                        <li>
+                            <div class="cart-img">
+                                <img src="@item.Img" style="width: 100px;">
+
+                            </div>
+                            <div class="cart-price">
+                                <span>@item.Name</span>
+                                <p>@item.soluong × @(string.Format("{0:#,##0}", item.Price)) VNĐ</p>
+                            </div>
+                            <div class="cart-close">
+                                <i class="far fa-times-circle" id="cart-close" onclick="return location.href= '/Home/Delete/@item.ID'"></i>
+                            </div>
+                        </li>
+                    }
+                }
+                else
+                {
+                    <li class="none-product">
+                        <h4>Chưa có sản phẩm nào</h4>
+                    </li>
+                }
+            </ul>
+            <h4>TẠM TÍNH: @(string.Format("{0:#,##0}", tongtien)) VNĐ</h4>
+            <button id="button-1">XEM GIỎ HÀNG</button>
+            @if (Session["giohang"] != null)
+            {
+                <button id="button-2" onclick="location.href ='/Home/Pay'">THANH TOÁN</button>
+            }
+            else
+            {
+                <button id="button-2" onclick="cart_null()">THANH TOÁN</button>
+            }
+            <button id="button-2" onclick="location.href ='/Home/DeleteAll'">XÓA GIỎ HÀNG</button>
+        </div>
+        <div class="cart-2" onclick="close_cart()">
+        </div>
+    </div>
+    @RenderBody()
+</body>
+</html>
+<footer class="footer">
+    <ul class="ul-footer">
+        <li>
+            <div class="card-footer">
+                <img src="~/Content/img/logo.gif" alt="">
+                <p>Office Online: 0345 500 073</p>
+                <p>HN: 192 Kim Mã, Ba Đình, Hà Nội</p>
+                <p>Open: 8h30 - 21h30 - Hotline:0345 500 073 (tạm đóng cửa)</p>
+            </div>
+        </li>
+        <li>
+            <div class="card-footer">
+                <h5>CHÍNH SÁCH</h5>
+                <p>CHÍNH SÁCH BẢO QUẢN</p>
+                <p>CHÍNH SÁCH ĐỔI HÀNG</p>
+                <p>CHÍNH SÁCH BẢO MẬT</p>
+                <p>HỆ THỐNG MEMBER</p>
+            </div>
+        </li>
+        <li>
+            <div class="card-footer">
+                <h5>DỊCH VỤ HƯỚNG DẪN</h5>
+                <p>GIAO HÀNG TẬN NƠI</p>
+                <p>MEMBER OFFLINE</p>
+                <p>MEMBER ONLINE</p>
+                <p>HƯỚNG DẪN ĐĂNG KÝ TÀI KHOẢN</p>
+                <p>HƯỚNG DẪN BẢO QUẢN</p>
+            </div>
+        </li>
+        <li>
+            <div class="card-footer">
+                <h5>CỘNG ĐỒNG</h5>
+                <a href=""><i class="fab fa-facebook-f"></i></a><a href=""><i class="fab fa-instagram"></i></a>
+                <h5 style="margin-top:20px;">ĐỐI TÁC GIAO HÀNG</h5>
+                <img src="~/Content/img/doitacgiaohang.png" alt="">
+            </div>
+        </li>
+    </ul>
+    <p class="last-footer" style="font-size:20px; font-weight:bold;">Copyright 2018 © SWE</p>
+</footer>
+
+@RenderSection("scripts", required: false)
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+
+<script>
+    function cart_null() {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Giỏ hàng của bạn chưa có sản phẩm',
+        })
+    }
+    function close_cart() {
+        document.getElementById("cart").style.left = "-100%";
+    }
+    $('#opencart').click(function () {
+        $('#cart').css("left", "0%");
+        showCart();
+    })
+</script>
+<script src="~/Content/Script/script.js"></script>
+

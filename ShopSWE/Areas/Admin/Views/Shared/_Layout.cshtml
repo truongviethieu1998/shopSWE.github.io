@@ -1,0 +1,113 @@
+﻿@using ShopSWE.Models.ViewModels
+<!DOCTYPE html>
+<html lang="en">
+@{
+    List<giohang> ds = null;
+    ViewBag.giohangSoluong = 0;
+    int tongtien = 0;
+    if (Session["giohang"] != null)
+    {
+        ds = (List<giohang>)Session["giohang"];
+        foreach (giohang item in ds)
+        {
+            tongtien += item.soluong * item.Price;
+        }
+        ViewBag.giohangSoluong = ds.Sum(x => x.soluong);
+    }
+}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login-SWE</title>
+    <link rel="icon" href="~/Content/img/logo2.png">
+
+    <!-- Toasts -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css" rel="stylesheet" />
+    <script src="https://use.fontawesome.com/releases/v5.12.0/js/all.js"></script>
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <!-- Toasts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
+    <link rel="stylesheet" href="~/Content/Css/style.css">
+</head>
+<body>
+    <div class="menu">
+        <a href="#" id="button-shopping-cart"><i id="shopping-cart" class="fas fa-shopping-cart" onclick="open_cart()"></i><span id="soluong"></span></a>
+        <a href="@Url.Action("Index","Home")"><img src="~/Content/img/logo.gif" alt="" id="img1"></a>
+        <input id="menu2" type="checkbox">
+        <label for="menu2"></label>
+        <div id="search">
+            <form action="@Url.Action("SearchName", "danhsachsanpham")" method="post">
+                <input class="search" id="input-search" type="text" name="Name" placeholder="Tìm kiếm">
+                <button style="border:none; background:none;" id="search-2" type="submit"><i class="fas fa-search-plus"></i></button>
+            </form>
+        </div>
+        <ul id="menu1">
+            <li><img src="~/Content/img/logo2.png" alt="" id="logo2"></li>
+            <li>
+                <form action="@Url.Action("SearchName", "danhsachsanpham")" method="post">
+                    <input type="text" id="search-menu1" name="Name" placeholder="Tìm kiếm">
+                </form>
+            </li>
+            <li><a href="@Url.Action("Index","danhsachsanpham")">SẢN PHẨM</a></li>
+            <li><a href="@Url.Action("Donhang","danhsachsanpham")">ĐƠN ORDER</a></li>
+            <li><a href="">DOANH THU</a></li>
+            <li><a href="">QUẢN LÝ</a></li>
+            <li><a href="">FEEDBACK</a></li>
+            <li><a href="#" onclick="timkiem()"><i class="fas fa-search"></i></a></li>
+        </ul>
+    </div>
+
+    @RenderBody()
+</body>
+</html>
+<footer class="footer">
+    <ul class="ul-footer">
+        <li>
+            <div class="card-footer">
+                <img src="~/Content/img/logo.gif" alt="">
+                <p>Office Online: 0345 500 073</p>
+                <p>HN: 192 Kim Mã, Ba Đình, Hà Nội</p>
+                <p>Open: 8h30 - 21h30 - Hotline:0345 500 073 (tạm đóng cửa)</p>
+            </div>
+        </li>
+        <li>
+            <div class="card-footer">
+                <h5>CHÍNH SÁCH</h5>
+                <p>CHÍNH SÁCH BẢO QUẢN</p>
+                <p>CHÍNH SÁCH ĐỔI HÀNG</p>
+                <p>CHÍNH SÁCH BẢO MẬT</p>
+                <p>HỆ THỐNG MEMBER</p>
+            </div>
+        </li>
+        <li>
+            <div class="card-footer">
+                <h5>DỊCH VỤ HƯỚNG DẪN</h5>
+                <p>GIAO HÀNG TẬN NƠI</p>
+                <p>MEMBER OFFLINE</p>
+                <p>MEMBER ONLINE</p>
+                <p>HƯỚNG DẪN ĐĂNG KÝ TÀI KHOẢN</p>
+                <p>HƯỚNG DẪN BẢO QUẢN</p>
+            </div>
+        </li>
+        <li>
+            <div class="card-footer">
+                <h5>CỘNG ĐỒNG</h5>
+                <a href=""><i class="fab fa-facebook-f"></i></a><a href=""><i class="fab fa-instagram"></i></a>
+                <h5 style="margin-top:20px;">ĐỐI TÁC GIAO HÀNG</h5>
+                <img src="~/Content/img/doitacgiaohang.png" alt="">
+            </div>
+        </li>
+    </ul>
+    <p class="last-footer" style="font-size:20px; font-weight:bold;">Copyright 2018 © SWE</p>
+</footer>
+<script>
+    function close_cart() {
+        document.getElementById("cart").style.left = "-100%";
+    }
+    function open_cart() {
+        document.getElementById("cart").style.left = "0%";
+    }
+</script>
+
+<script src="~/Content/Script/script.js"></script>
+

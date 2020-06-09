@@ -1,0 +1,89 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css" rel="stylesheet"/>
+<link rel="stylesheet" href="~/Content/Css/style.css">
+<div class="login">
+    <div class="login-1">
+        <img src="~/Content/img/login.jpg" alt="">
+        <h1>SWE</h1>
+        <div id="left" class="sign">
+            <h2>SIGN</h2>
+            <span>IN</span>
+        </div>
+        <div id="right" class="sign">
+            <h2>SIGN</h2>
+            <span>UP</span>
+        </div>
+    </div>
+    <div class="sign-in" id="sign-in">
+        <h2>SIGN IN</h2>
+        <div class="username">
+            <input id="Username" type="email" placeholder="Email*">
+            <p id="check-user">Please provide a valid Email</p>
+            <i id="success" class="fas fa-check"></i><i id="warning" class="fas fa-exclamation-circle"></i>
+        </div>
+        <div class="password">
+            <input type="password" placeholder="Password*" id="Password">
+            <p id="check-pass">Please provide a valid Password</p>
+            <i id="success-2" class="fas fa-check"></i><i id="warning-2" class="fas fa-exclamation-circle"></i>
+        </div>
+        <button type="button" onclick="sign()" id="login">Sign In</button>
+        <p>Forget Password?</p>
+        <span id="Sign-up-2">Sign Up</span>
+    </div>
+    <div class="sign-in" id="sign-up">
+        <a id="Sign-in-2"><i class="fas fa-long-arrow-alt-left"></i></a>
+        <h2>SIGN UP</h2>
+        <input type="text" placeholder="Username*">
+        <input type="email" placeholder="Email*">
+        <input type="password" placeholder="Password*">
+        <button>Sign Up</button>
+    </div>
+</div>
+<script>
+    $('#login').click(function () {
+        let email = $('input[type = "email"]').val();
+        let password = $('input[type = "password"]').val();
+        if (email != '' && password != '') {
+            let data = { Email: email, Password: password };
+            $.ajax({
+                url: '/Login/Index',
+                type: 'POST',
+                data: { model: data },
+            })
+                .done(function (res) {
+                    if (res.Code == 200) {
+                        toastr["success"]('Đăng nhập thành công')
+                        location.href = "/Admin/danhsachsanpham/Index";
+                    }
+                    else {
+                        toastr["error"]('Đăng nhập thất bại')
+                        toastr.options = {
+                            "closeButton": true,
+                        }
+                    }
+                })
+                .fail(function () {
+                    toastr["error"]('Đăng nhập thất bại')
+                    toastr.options = {
+                        "closeButton": true,
+                    }
+                })
+                .always(function () {
+                });
+        }
+        else {
+            toastr["error"]('Bạn chưa nhập email hoặc password', 'LỖI!!!')
+            toastr.options = {
+                "closeButton": true,
+            }
+        }
+    });
+</script>
+
+

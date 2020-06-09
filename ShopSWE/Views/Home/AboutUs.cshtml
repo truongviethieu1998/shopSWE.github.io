@@ -1,0 +1,77 @@
+﻿@{
+    ViewBag.Title = "AboutUs";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="~/Content/Css/style.css">
+<style type="text/css">
+    .row {
+        width: 100%;
+        margin: 0;
+    }
+
+    h2 {
+        background: orange;
+        padding: 25px;
+        font-size: 2rem;
+    }
+
+    .about-us {
+        width: 200px;
+    }
+
+        .about-us ul {
+            list-style: none;
+            padding: 0px;
+            margin: 0px;
+        }
+
+        .about-us li {
+            cursor: pointer;
+        }
+</style>
+<h2>ABOUT US</h2>
+<div class="row">
+    <div class="about-us col-12 col-lg-5">
+        <ul>
+            <li>📍350 Điện Biên Phủ, Bình Thạnh</li>
+            <li>📍123 Nguyễn Trãi, Bến Thành, Quận 1, HCMC</li>
+            <li>📍44A Trần Quang Diệu, Quận 3, HCMC</li>
+            <li>📍26 Lý Tự Trọng, Quận 1, HCMC</li>
+            <li>📍235 Phan Trung , Biên Hoà</li>
+            <li>📍Vincom Bà Triệu, Hà Nội</li>
+            <li>FOUNDED IN 2016 BY 3 YOUNG KIDS ON A MISSION TO MAKE THEIR VISION OF STREETWEAR COME TO LIFE. SINCE THEN STREETWEAREAZY HAS BECOME A LIFESTYLE BRAND FOR ALL TO WEAR. AND WE’RE ONLY GETTING STARTED!</li>
+        </ul>
+    </div>
+    <div id="map" class="col-12 col-lg-7" style="width: 100%; height: 500px;"></div>
+</div>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC_ejHEnM4pHP3F0BLvq_GXpfdKxtRZOSQ&callback=initMap"></script>
+<script>
+    function initMap() {
+        var SWE = { lat: 10.800354, lng: 106.707991 };
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 13,
+            center: SWE
+        });
+
+        var contentString = '<h2>SWE</h2> <br>' + '<p>350 Điện Biên Phủ</p>';
+
+        var infowindow = new google.maps.InfoWindow({
+            content: contentString
+        });
+
+        var marker = new google.maps.Marker({
+            position: SWE,
+            map: map,
+            title: 'Địa Chỉ'
+        });
+        marker.addListener('click', function () {
+            infowindow.open(map, marker);
+        });
+    }
+</script>
+
+

@@ -1,0 +1,156 @@
+﻿@model ShopSWE.Models.Enity.Sanpham1
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="~/Content/Css/style.css">
+<script src="~/Content/ckfinder/ckfinder.js"></script>
+
+<style>
+    .form-horizontal {
+        width: 80%;
+        margin: 0 auto;
+    }
+
+        .form-horizontal h3 {
+            font-weight: bold;
+            font-size: 25px;
+            margin-left: 15px;
+        }
+
+        .form-horizontal h2 {
+            font-weight: bold;
+            font-size: 30px;
+            margin: 10px 0 10px 15px;
+        }
+
+    .form-group button {
+        border: none;
+        background-color: black;
+        color: orange;
+        border-radius: 10px;
+        padding: 6px 20px;
+        font-weight: bold;
+    }
+
+    .form-group a {
+        background-color: black;
+        color: orange;
+        border-radius: 10px;
+        padding: 6px 20px;
+        outline: none;
+        font-weight: bold;
+    }
+
+        .form-group a:hover {
+            text-decoration: none;
+        }
+
+    #btnSelectImage,#btnSelectImage2 {
+        width: 127px;
+        font-size: 17px;
+        font-weight: bold;
+        background: black;
+        color: orange;
+        text-align: center;
+        border-radius: 5px;
+        padding-bottom: 2px;
+        cursor: pointer;
+    }    
+    .form-control{
+        outline:none;
+        border: 1px solid black;
+    }
+</style>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <h2>Chỉnh sửa</h2>
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.ID)
+
+    <div class="form-group">
+        <h3>Tên Sản Phẩm</h3>
+        @*@Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })*@
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+            @*@Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })*@
+        </div>
+    </div>
+
+    <div class="form-group">
+        <h3>Giá Sản Phẩm</h3>
+        @*@Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-2" })*@
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <h3>Ảnh Sản Phẩm</h3>
+        @*@Html.LabelFor(model => model.Img, htmlAttributes: new { @class = "control-label col-md-2" })*@
+        <div class="col-md-10">
+            <p id="btnSelectImage">Chọn ảnh</p>
+            @Html.EditorFor(model => model.Img, new { htmlAttributes = new { @class = "form-control", @id = "txtImage", @name = "Img" } })
+            @Html.ValidationMessageFor(model => model.Img, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <h3>Ảnh Sản Phẩm</h3>
+        @*@Html.LabelFor(model => model.Img2, htmlAttributes: new { @class = "control-label col-md-2" })*@
+        <div class="col-md-10">
+            <p id="btnSelectImage2">Chọn ảnh 2</p>
+            @Html.EditorFor(model => model.Img2, new { htmlAttributes = new { @class = "form-control", @id = "txtImage2", @name = "Img2" } })
+            @Html.ValidationMessageFor(model => model.Img2, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <h3>Ảnh Sản Phẩm</h3>
+        @*@Html.LabelFor(model => model.Img2, htmlAttributes: new { @class = "control-label col-md-2" })*@
+        <div class="col-md-10">
+            <p id="btnSelectImage2">Chọn ảnh 2</p>
+            @Html.EditorFor(model => model.Img2, new { htmlAttributes = new { @class = "form-control", @id = "txtImage2", @name = "Img2" } })
+            @Html.ValidationMessageFor(model => model.Img2, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <button type="submit">Save</button>
+            <a href="@Url.Action("Index","danhsachsanpham")">Trở về Danh sách sản phẩm</a>
+        </div>
+    </div>
+</div>
+}
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#btnSelectImage").on('click', function () {
+            var finder = new CKFinder();
+            finder.selectActionFunction = function (url) {
+                $('#txtImage').val(url);
+            };
+            finder.popup();
+        })
+        $("#btnSelectImage2").on('click', function () {
+            var finder = new CKFinder();
+            finder.selectActionFunction = function (url) {
+                $('#txtImage2').val(url);
+            };
+            finder.popup();
+        })
+    })
+</script>
+

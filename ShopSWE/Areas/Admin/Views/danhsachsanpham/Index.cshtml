@@ -1,0 +1,325 @@
+﻿@model ShopSWE.Models.Enity.Sanpham1
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<!-- Toasts -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="~/Content/Css/style.css">
+<script src="~/Content/ckfinder/ckfinder.js"></script>
+<style>
+    .admin {
+        width: 90%;
+        margin: 50px auto;
+    }
+
+        .admin h2 {
+            position: relative;
+            width: 90%;
+            margin: 0 auto;
+            font-weight: bold;
+            text-align: center;
+        }
+
+    .admin-input {
+        position: relative;
+        width: 100%;
+    }
+
+        .admin-input p {
+            font-weight: bold;
+            font-size: 25px;
+            margin: 10px 0;
+        }
+
+        .admin-input input {
+            position: relative;
+            width: 100%;
+            height: 40px;
+            border: 1px solid black;
+            border-radius: 5px;
+            outline: none;
+            padding-left: 20px;
+        }
+
+    .admin button {
+        position: relative;
+        margin: 15px 0 0 15px;
+        background-color: black;
+        color: orange;
+        font-weight: bold;
+        border: none;
+        padding: 7px 25px;
+        border-radius: 5px;
+        outline: none;
+        transition: .4s all;
+    }
+
+        .admin button:hover {
+            background-color: gray;
+        }
+
+    .table {
+        text-align: center;
+        margin-top: 15px;
+        border-radius: 10px;
+    }
+
+        .table th {
+            background: black;
+            color: orange;
+        }
+
+    #table-engine, #table-engine1 {
+        width: 90%;
+        margin: 0 auto;
+    }
+
+    #Img {
+        border: none;
+    }
+
+    #btnSelectImage, #btnSelectImage2 {
+        width: 127px;
+        font-size: 17px;
+        background: black;
+        color: orange;
+        text-align: center;
+        border-radius: 5px;
+        padding-bottom: 2px;
+        cursor: pointer;
+    }
+
+    #radio {
+        width: 20px;
+        height: 20px;
+        margin-left: 20px;
+    }
+
+    #span-select {
+        font-weight: bold;
+    }
+
+    .pagination {
+        width: 170px;
+        margin: 0 auto;
+    }
+
+        .pagination li {
+            margin: 0 3px;
+        }
+
+    .page-link-active {
+        background-color: orange;
+        color: white;
+        border: 2px solid orange;
+    }
+
+    .pagination a {
+        color: black;
+        font-weight: bold;
+        padding: 6px 12px;
+        border-radius: 100%;
+        border: 2px solid black;
+        transition: .3s all;
+    }
+
+        .pagination a:hover {
+            background-color: orange;
+            border: 2px solid black;
+        }
+
+    .page-item:last-child .page-link {
+        border-top-right-radius: 100%;
+        border-bottom-right-radius: 100%;
+    }
+
+    .page-item:first-child .page-link {
+        border-top-left-radius: 100%;
+        border-bottom-left-radius: 100%;
+    }
+</style>
+
+<div id="input-area" class="admin">
+    <!-- /.card-header -->
+    <!-- form start -->
+    <h2>Sản phẩm New Arrivals</h2>
+    <form id="danhsachsanpham-form" action="/" method="post">
+        <div class="row">
+            <div class="admin-input col-6">
+                <p>Tên sản phẩm</p>
+                <input type="text" id="Name" name="Name" placeholder="Tên sản phẩm">
+            </div>
+            <div class="admin-input col-6">
+                <p>Giá sản phẩm</p>
+                <input type="text" id="Price" name="Price" placeholder="Giá sản phẩm">
+            </div>
+        </div>
+        <div class="row">
+            <div class="admin-input col-6">
+                <p>Chọn ảnh sản phẩm</p>
+                <p id="btnSelectImage">Chọn ảnh</p>
+                <input type="text" id="txtImage" name="Img">
+            </div>
+            <div class="admin-input col-6">
+                <p>Chọn ảnh 2 của sản phẩm</p>
+                <p id="btnSelectImage2">Chọn ảnh</p>
+                <input type="text" id="txtImage2" name="Img2">
+            </div>
+        </div>
+        <div class="row">
+            <div class="admin-input col-12">
+                <p>Date</p>
+                <input type="text" value="@string.Format("{0:g}", DateTime.Now)" name="CreateDate">
+            </div>
+        </div>
+        <div class="row">
+            <div class="admin-input col-6">
+                <p>BestSeller</p>
+                <div class="row">
+                    <div>
+                        <input type="radio" id="radio" name="BestSeller" value="0" />
+                        <span id="span-select">Có</span>
+                    </div>
+                    <div>
+                        <input type="radio" id="radio" name="BestSeller" value="" />
+                        <span id="span-select">Không</span>
+                    </div>
+                </div>
+            </div>
+            <div class="admin-input col-6">
+                <p>Loại Sản Phẩm</p>
+                <div class="row">
+                    <div>
+                        <input type="radio" id="radio" name="Category" value="0" checked />
+                        <span id="span-select">Top</span>
+                    </div>
+                    <div>
+                        <input style="margin-left:57px;" type="radio" id="radio" name="Category" value="1" />
+                        <span id="span-select">Outerwear</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div>
+                        <input type="radio" id="radio" name="Category" value="2" />
+                        <span id="span-select">Bottoms</span>
+                    </div>
+                    <div>
+                        <input type="radio" id="radio" name="Category" value="3" />
+                        <span id="span-select">Accessories</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <!-- /.card-body -->
+    <div>
+        <button type="button" onclick="Add();">Xác nhận sản phảm</button>
+    </div>
+</div>
+<div id="table-engine" class="card-body table-responsive p-0">
+    @{Html.RenderAction("Pagging", "danhsachsanpham");}
+</div>
+
+
+<script src="~/Content/sweetalert2/sweetalert2.all.js"></script>
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $("#btnSelectImage").on('click', function () {
+            var finder = new CKFinder();
+            finder.selectActionFunction = function (url) {
+                $('#txtImage').val(url);
+            };
+            finder.popup();
+        })
+        $("#btnSelectImage2").on('click', function () {
+            var finder = new CKFinder();
+            finder.selectActionFunction = function (url) {
+                $('#txtImage2').val(url);
+            };
+            finder.popup();
+        })
+    })
+</script>
+<script>
+    function Refresh(destination, pageIndex) {
+        $.ajax({
+            url: '/Admin/danhsachsanpham/Pagging',
+            type: 'GET',
+            dataType: 'html',
+            data: { pageIndex: pageIndex },
+        })
+            .done(function (res) {
+                $(destination).html(res);
+            })
+            .fail(function () {
+
+            })
+            .always(function () {
+
+            });
+    }
+    function Add() {
+        let data = $('#danhsachsanpham-form').serialize();
+        console.log(data);
+        $.ajax({
+            url: '/Admin/danhsachsanpham/Add',
+            type: 'POST',
+            dataType: 'json',
+            data: data,
+        })
+            .done(function (res) {
+                if (res.StatusCode == 200) {
+                    toastr.success('Thêm mới thành công!', 'Success !!!');
+                    Refresh('#table-engine');
+                }
+                else {
+                    toastr.error(res.Message, 'Error !!!');
+                }
+            })
+            .fail(function () {
+                console.log("error");
+            })
+            .always(function () {
+                console.log("complete");
+            });
+    }
+
+    function Delete(ID) {
+        Swal.fire({
+            title: 'Bạn có chắc chắn xóa không?',
+            text: "Bạn sẽ không thể khôi phục lại được!",
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Xóa!!!'
+        }).then((result) => {
+            if (result.value) {
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("Delete")',
+                    data: { ID: ID },
+                    dataType: "json",
+                    success: function () {
+                        Refresh('#table-engine');
+                        //setTimeout(function () {
+                        //    location.href("/Admin/danhsachsanpham/Index").reload();
+                        //}, 1000);
+                    },
+                    error: function () {
+                        alert("Error while deleting data");
+                    }
+                });
+            }
+        })
+    }
+
+
+</script>
+

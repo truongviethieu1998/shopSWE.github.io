@@ -1,0 +1,66 @@
+﻿@using ShopSWE.Models.Enity
+@model ShopSWE.Models.ViewModels.SanphamViewModels
+@{
+    int previous = Model.pageIndex - 1;
+    int next = Model.pageIndex + 1;
+}
+<table class="table table-hover text-nowrap">
+    <thead>
+        <tr>
+            <th>Tên sản phẩm</th>
+            <th>Giá sản phẩm</th>
+            <th>Hình ảnh sản phẩm</th>
+            <th>Hình ảnh 2 của sản phẩm</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Sanpham1 item in Model.sanphams as List<Sanpham1>)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Price</td>
+                <td>@item.Img</td>
+                <td>@item.Img2</td>
+                <td class="action-picker">
+                    <i class="fa fa-eye" style="margin-left: 10px; cursor:pointer;" onclick="return location.href = '/Admin/danhsachsanpham/Detail/@item.ID'"></i>
+                    <i class="fa fa-pencil-alt" style="margin-left: 10px; cursor:pointer;" onclick="return location.href = '/Admin/danhsachsanpham/Edit/@item.ID'"></i>
+                    <i class="fa fa-trash" style="margin-left: 10px; cursor:pointer;" onclick="return Delete(@item.ID)"></i>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+        @if (Model.pageIndex == 1)
+        {
+            <li class="page-item"><a class="page-link" style="opacity: 0.5;"><i class="fas fa-angle-left"></i></a></li>
+
+        }
+        @if (Model.pageIndex > 1)
+        {
+            <li class="page-item"><a class="page-link" onclick="Refresh('#table-engine',@previous)"><i class="fas fa-angle-left"></i></a></li>
+        }
+        @for (int i = 1; i <= Model.TotalPage; i++)
+        {
+            if (i == Model.pageIndex)
+            {
+                <li class="page-item"><a class="page-link-active page-link" onclick="Refresh('#table-engine',@i)">@i</a></li>
+            }
+            else
+            {
+                <li class="page-item"><a class="page-link" onclick="Refresh('#table-engine',@i)">@i</a></li>
+            }
+        }
+        @if (Model.pageIndex < Model.TotalPage)
+        {
+            <li id="next" class="page-item"><a class="page-link" onclick="Refresh('#table-engine',@next)"><i class="fas fa-angle-right"></i></a></li>
+        }
+        @if (Model.pageIndex == Model.TotalPage)
+        {
+            <li id="next" class="page-item"><a class="page-link" style="opacity: 0.5;"><i class="fas fa-angle-right"></i></a></li>
+        }
+    </ul>
+</nav>
+

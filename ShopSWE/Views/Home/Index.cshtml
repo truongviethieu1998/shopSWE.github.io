@@ -1,0 +1,247 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var ListNewProduct = (List<ShopSWE.Models.Enity.Sanpham1>)ViewBag.ProductNew;
+    var ListProductBestSeller = (List<ShopSWE.Models.Enity.Sanpham1>)ViewBag.ProductBestSeller;
+}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="~/Content/Css/style.css">
+<div class="store">
+    <div class="new-arrivals">
+        <p>
+            Life's To Short To Wear Boring Clothes.
+            <span>
+                NEW ARRIVALS
+            </span>
+        </p>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        @foreach (var item in ListNewProduct)
+        {
+            <div class="col-6 col-lg-4 col-md-6 col-sm-4 col-xl-3">
+                <div class="card" onclick="return location.href = '/Home/Detail/@item.ID'">
+                    <img class="card-img-top" src="@item.Img" alt="Card image cap">
+                    <img class="card-img-top" id="img2" src="@item.Img2" alt="Card image cap">
+                    <div class="card-body">
+                        <a href="#" class="btn btn-primary" onclick="return location.href = '/Home/Detail/@item.ID'">Xem Chi Tiết</a>
+                        <h5 class="card-title">@item.Name</h5>
+                        <p class="card-text">@(string.Format("{0:#,##0}", item.Price)) VNĐ</p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+<div class="test">
+    <ul id="c">
+        <li class="a">
+            <div class="card card-2">
+                <img class="card-img-top" src="~/Content/img/item-1.jpg" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title"> PRIVATE PLANET - TEE</h5>
+                    <p class="card-text">400.000 VNĐ</p>
+                </div>
+            </div>
+        </li>
+        <li class="a">
+            <div class="card card-2">
+                <img class="card-img-top" src="~/Content/img/item-2.jpg" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">TRANSPARENT TOTE</h5>
+                    <p class="card-text">250.000 VNĐ</p>
+                </div>
+            </div>
+        </li>
+        <li class="a">
+            <div class="card card-2">
+                <img class="card-img-top" src="~/Content/img/item-3.jpg" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">PP COACH JACKET</h5>
+                    <p class="card-text">620.000 VNĐ</p>
+                </div>
+            </div>
+        </li>
+        <li class="a">
+            <div class="card card-2">
+                <img class="card-img-top" src="~/Content/img/item-4.jpg" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">PP SHORT</h5>
+                    <p class="card-text">350.000 VNĐ</p>
+                </div>
+            </div>
+        </li>
+
+        <li class="a">
+            <div class="card card-2">
+                <img class="card-img-top" src="~/Content/img/item-5.jpg" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">PP BACKPACK</h5>
+                    <p class="card-text">550.000 VNĐ</p>
+                </div>
+            </div>
+        </li>
+        <li class="a">
+            <div class="card card-2">
+                <img class="card-img-top" src="~/Content/img/item-6.jpg" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">PP SHOULDERBAG</h5>
+                    <p class="card-text">350.000 VNĐ</p>
+                </div>
+            </div>
+        </li>
+        <li class="a">
+            <div class="card card-2">
+                <img class="card-img-top" src="~/Content/img/item-7.jpg" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">PP WALLET</h5>
+                    <p class="card-text">260.000 VNĐ</p>
+                </div>
+            </div>
+        </li>
+        <li class="a">
+            <div class="card card-2">
+                <img class="card-img-top" src="~/Content/img/item-2.jpg" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">CUBE COACH JACKET - WHITE/BLACK</h5>
+                    <p class="card-text">490.000 VNĐ</p>
+                </div>
+            </div>
+        </li>
+        <li class="a">
+            <div class="card card-2">
+                <img class="card-img-top img-item" src="~/Content/img/item-3.jpg" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">CUBE COACH JACKET - WHITE/BLACK</h5>
+                    <p class="card-text">490.000 VNĐ</p>
+                </div>
+            </div>
+        </li>
+    </ul>
+
+    <div class="video">
+        <video src="~/Content/img/video.mp4" autoplay loop muted></video>
+    </div>
+</div>
+
+<div class="facebook">
+    <div class="facebook-left">
+        <img src="~/Content/img/facebook.jpg" alt="">
+        <div class="description">
+            <h2>SWE HOME</h2>
+            <p>THAM GIA GROUP FACEBOOK CÙNG SWE</p>
+            <a href=""><i class="fab fa-facebook-f"></i>THAM GIA</a>
+        </div>
+    </div>
+    <div class="facebook-right">
+        <img src="~/Content/img/facebook-2.jpg" alt="">
+        <div class="description description-2">
+            <h2>SWE MARTKETPLACE</h2>
+            <p>NƠI TRAO ĐỔI MUA BÁN SẢN PHẨM CỦA SWE</p>
+            <a href=""><i class="fab fa-instagram"></i>THAM GIA</a>
+        </div>
+    </div>
+</div>
+
+<div class="store">
+    <div class="new-arrivals best-seller">
+        <span>
+            BEST SELLER
+        </span>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        @foreach (var item in ListProductBestSeller)
+        {
+            <div class="col-6 col-lg-6 col-md-6 col-sm-6 col-xl-3">
+                <div class="card" onclick="return location.href = '/Home/Detail/@item.ID'">
+                    <img class="card-img-top" src="@item.Img" alt="Card image cap">
+                    <div class="card-body">
+                        <a href="#" class="btn btn-primary" onclick="return location.href = '/Home/Detail/@item.ID'">Xem Chi Tiết</a>
+                        <h5 class="card-title">@item.Name</h5>
+                        <p class="card-text">@(string.Format("{0:#,##0}", item.Price)) VNĐ</p>
+                    </div>
+                </div>
+            </div>
+        }
+            @*<div class="col-lg-6 col-md-6 col-sm-6 col-xl-3 col-6">
+                <div class="card">
+                    <img class="card-img-top" src="~/Content/img/best-seller2.jpg" alt="Card image cap">
+                    <div class="card-body">
+                        <a href="#" class="btn btn-primary">Xem Chi Tiết</a>
+                        <h5 class="card-title">CUBE TEE - SPRAYPANT</h5>
+                        <p class="card-text">390.000 VNĐ</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xl-3 col-6">
+                <div class="card">
+                    <img class="card-img-top" src="~/Content/img/best-seller3.jpg" alt="Card image cap">
+                    <div class="card-body">
+                        <a href="#" class="btn btn-primary">Xem Chi Tiết</a>
+                        <h5 class="card-title">PACKABLE JACKET - BLUE/WHITE</h5>
+                        <p class="card-text">500.000 VNĐ</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xl-3 col-6">
+                <div class="card">
+                    <img class="card-img-top" src="~/Content/img/best-seller4.jpg" alt="Card image cap">
+                    <div class="card-body">
+                        <a href="#" class="btn btn-primary">Xem Chi Tiết</a>
+                        <h5 class="card-title">PRIVATE ISLAND SNEAKERS</h5>
+                        <p class="card-text">420.000 VNĐ</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xl-3 col-6">
+                <div class="card">
+                    <img class="card-img-top" src="~/Content/img/best-seller5.jpg" alt="Card image cap">
+                    <div class="card-body">
+                        <a href="#" class="btn btn-primary">Xem Chi Tiết</a>
+                        <h5 class="card-title">CUBE WINDBRAKER - BLACK</h5>
+                        <p class="card-text">550.000 VNĐ</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xl-3 col-6">
+                <div class="card">
+                    <img class="card-img-top" src="~/Content/img/best-seller6.jpg" alt="Card image cap">
+                    <div class="card-body">
+                        <a href="#" class="btn btn-primary">Xem Chi Tiết</a>
+                        <h5 class="card-title">INTL TEE - NAVY</h5>
+                        <p class="card-text">350.000 VNĐ</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xl-3 col-6">
+                <div class="card">
+                    <img class="card-img-top" src="~/Content/img/best-seller7.jpg" alt="Card image cap">
+                    <div class="card-body">
+                        <a href="#" class="btn btn-primary">Xem Chi Tiết</a>
+                        <h5 class="card-title">B2S BACKPACK - ORANGE</h5>
+                        <p class="card-text">340.000 VNĐ</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xl-3 col-6">
+                <div class="card">
+                    <img class="card-img-top" src="~/Content/img/best-seller8.jpg" alt="Card image cap">
+                    <div class="card-body">
+                        <a href="#" class="btn btn-primary">Xem Chi Tiết</a>
+                        <h5 class="card-title">TEXT SHORTS</h5>
+                        <p class="card-text">360.000 VNĐ</p>
+                    </div>
+                </div>
+            </div>*@
+        </div>
+</div>
+
+

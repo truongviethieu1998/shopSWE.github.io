@@ -1,0 +1,172 @@
+﻿@using ShopSWE.Models.ViewModels
+@{
+    ViewBag.Title = "Pay";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    List<giohang> ds = null;
+    ViewBag.giohangSoluong = 0;
+    int tongtien = 0;
+    int tongtien2 = 0;
+    int giaohang = 30000;
+    if (Session["giohang"] != null)
+    {
+        ds = (List<giohang>)Session["giohang"];
+        foreach (giohang item in ds)
+        {
+            tongtien += item.soluong * item.Price;
+            tongtien2 = tongtien + giaohang;
+        }
+        ViewBag.giohangSoluong = ds.Count;
+    }
+}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="~/Content/Css/style.css">
+<link rel="stylesheet" href="~/Content/Css/stylePay.css">
+<style>
+    .order-form-2-product #button-pay {
+        text-decoration: none;
+        background: black;
+        color: white;
+        font-weight: bold;
+        padding: 8px 20px;
+        cursor: pointer;
+        border: none;
+        transition: .3s all;
+    }
+
+        .order-form-2-product #button-pay:hover {
+            background: rgb(255, 145, 0);
+            color: black;
+        }
+</style>
+@using (Html.BeginForm("AddOrder", "Home", FormMethod.Post))
+{
+    <div id="input-area" class="Order">
+        <h2>Thanh Toán</h2>
+        <div class="row">
+            <div class="col-12 col-lg-6">
+                <form id="order-form" action="/" method="post">
+                    <h3 style="margin-top: 30px;">THÔNG TIN THANH TOÁN</h3>
+                    <div class="order-input col-12">
+                        <p>Họ Và Tên *</p>
+                        <input type="text" id="ShipName" name="ShipName" placeholder="Nhập đầy đủ họ và tên">
+                    </div>
+                    <div class="order-input col-12">
+                        <p>Số điện thoại *</p>
+                        <input type="text" id="ShipMobile" name="ShipMobile" placeholder="Số điện thoại">
+                    </div>
+                    <div class="order-input col-12">
+                        <p>Email *</p>
+                        <input type="Email" id="ShipEmail" name="ShipEmail" placeholder="Email của bạn">
+                    </div>
+                    <div class="order-input col-12">
+                        <p>Địa Chỉ *</p>
+                        <input type="text" id="ShipAddress" name="ShipAddress" placeholder="Ví dụ: số nhà 44,ngõ 192 Kim Mã,Hà Nội">
+                    </div>
+                </form>
+            </div>
+
+            <div class="col-12 col-lg-6 order-form-2">
+                <h3 style="margin-top: 10px;">ĐƠN HÀNG CỦA BẠN</h3>
+                <p id="sanpham">SẢN PHẨM</p>
+                <div class="order-form-2-product">
+                    <ul id="order-form-2-product">
+                        @if (Session["giohang"] != null)
+                        {
+                            foreach (giohang item in (List<giohang>)Session["giohang"] as List<giohang>)
+                            {
+                                <li>
+                                    <div class="product">
+                                        <span>@item.Name</span>
+                                        <p>@item.soluong × @(string.Format("{0:#,##0}", item.Price)) VNĐ</p>
+                                    </div>
+                                    <div class="total-product">
+                                        <p>@(string.Format("{0:#,##0}", item.Price * item.soluong)) VNĐ</p>
+                                    </div>
+                                </li>
+                            }
+                        }
+                        else
+                        {
+                            <li><p>Chưa có sản phẩm nào</p></li>
+
+                        }
+
+                        <li id="price-product">
+                            <div class="product">
+                                <p style="color: black; font-weight:bold;">Tạm tính</p>
+                            </div>
+                            <div class="total-product">
+                                <p>@(string.Format("{0:#,##0}", tongtien)) VNĐ</p>
+                            </div>
+                        </li>
+                        <li id="price-product">
+                            <div class="product">
+                                <p style="color: black; font-weight:bold;">Giao hàng</p>
+                            </div>
+                            <div class="total-product">
+                                <p>@(string.Format("{0:#,##0}", giaohang)) VNĐ</p>
+                            </div>
+                        </li>
+                        <li id="price-product">
+                            <div class="product">
+                                <p style="color: black; font-weight:bold;">Tổng</p>
+                            </div>
+                            <div class="total-product">
+                                <p>@(string.Format("{0:#,##0}", tongtien2)) VNĐ</p>
+                            </div>
+                        </li>
+                        <li id="price-product">
+                            <button id="button-pay" type="button" onclick="checkValue()">ĐẶT HÀNG</button>
+                        </li>
+                        <li id="price-product" class="thank-you">
+                            <p>Cám ơn quý khách đã tin tưởng và luôn ủng hộ SWE</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+
+<script>
+
+    $(function () {
+        $('input[name="ShipName"]' && 'input[name="ShipMobile"]' && 'input[name="ShipEmail"]' && 'input[name="ShipAddress"]').change(function () {
+            if ($(this).val()) {
+                //$("#button-pay").removeAttr('disabled');
+                $("#button-pay").prop("type", "submit");
+            }
+        })
+    })
+    var checkValue = function () {
+        var ShipName = document.getElementById("ShipName").value;
+        var ShipMobile = document.getElementById("ShipMobile").value;
+        var ShipEmail = document.getElementById("ShipEmail").value;
+        var ShipAddress = document.getElementById("ShipAddress").value;
+        if (ShipName == "" || ShipMobile == "" || ShipEmail == "" || ShipAddress == "") {
+            toastr.error('Bạn chưa nhập đủ thông tin đơn hàng', 'ERROR!!!');
+        }
+        else {
+            Swal.fire({
+                icon: 'success',
+                title: 'Đặt hàng thành công',
+                text: 'Cảm ơn bạn đã luôn tin tưởng và ủng hộ SWE!',
+                footer: '<a href>Phản hồi vào số điện thoại : 0345500073</a>'
+            })
+        }
+    }
+</script>
+
+
+
+
+
+
+
